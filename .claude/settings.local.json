@@ -63,7 +63,9 @@
       "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" workflow run build.yml --repo muji-stack/multi-session-app -f version=1.0.0)",
       "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" run list --repo muji-stack/multi-session-app --limit 5)",
       "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" run list --repo muji-stack/multi-session-app --limit 3)",
-      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" release view v1.0.0 --repo muji-stack/multi-session-app)"
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" release view v1.0.0 --repo muji-stack/multi-session-app)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" workflow run build.yml --repo muji-stack/multi-session-app -f version=1.0.1)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" run list --repo muji-stack/multi-session-app --limit 2)"
     ]
   }
 }

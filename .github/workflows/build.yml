@@ -61,11 +61,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: macos-arm64-build
-          path: dist/*.dmg
+          path: dist/*.zip
           retention-days: 7
 
       - name: Clean dist for x64 build
-        run: rm -rf dist/mac* dist/*.dmg dist/*.blockmap
+        run: rm -rf dist/mac* dist/*.zip dist/*.blockmap
 
       - name: Build for macOS x64
         run: npm run build && npx electron-builder --mac --x64 --publish never
@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: macos-x64-build
-          path: dist/*.dmg
+          path: dist/*.zip
           retention-days: 7
 
   build-linux:

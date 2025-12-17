@@ -59,15 +59,13 @@ mac:
     - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
     - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
   target:
-    - target: dmg
+    - target: zip
       arch:
         - x64
         - arm64
 
-dmg:
-  title: "${productName}"
-  # icon: resources/icon.icns  # Uncomment when icon.icns is available
-  artifactName: "${productName}-${version}-${arch}.${ext}"
+zip:
+  artifactName: "${productName}-${version}-${arch}-mac.${ext}"
 
 linux:
   # icon: resources/icon.png  # Uncomment when icon.png is available

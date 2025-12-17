@@ -28,9 +28,7 @@ jobs:
         run: npm ci
 
       - name: Build for Windows
-        run: npm run build:win
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build && npx electron-builder --win --publish never
 
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v4
@@ -55,9 +53,8 @@ jobs:
         run: npm ci
 
       - name: Build for macOS arm64
-        run: npm run build && npx electron-builder --mac --arm64
+        run: npm run build && npx electron-builder --mac --arm64 --publish never
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
       - name: Upload macOS arm64 artifacts
@@ -68,15 +65,11 @@ jobs:
           retention-days: 7
 
       - name: Clean dist for x64 build
-        run: rm -rf dist/mac* dist/*.dmg
-
-      - name: Rebuild native modules for x64
-        run: npm run rebuild
+        run: rm -rf dist/mac* dist/*.dmg dist/*.blockmap
 
       - name: Build for macOS x64
-        run: npm run build && npx electron-builder --mac --x64
+        run: npm run build && npx electron-builder --mac --x64 --publish never
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
       - name: Upload macOS x64 artifacts
@@ -102,9 +95,7 @@ jobs:
         run: npm ci
 
       - name: Build for Linux
-        run: npm run build:linux
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build && npx electron-builder --linux --publish never
 
       - name: Upload Linux artifacts
         uses: actions/upload-artifact@v4
@@ -119,6 +110,8 @@ jobs:
     needs: [build-windows, build-macos, build-linux]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: write
 
     steps:
       - name: Download all artifacts

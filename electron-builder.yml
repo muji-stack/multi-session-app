@@ -82,9 +82,9 @@ appImage:
 
 npmRebuild: true
 
-# Auto-update configuration
-publish:
-  provider: github
-  owner: muji-stack
-  repo: multi-session-releases
-  releaseType: release
+# Auto-update configuration (disabled for CI - artifacts uploaded separately)
+# publish:
+#   provider: github
+#   owner: muji-stack
+#   repo: multi-session-app
+#   releaseType: release

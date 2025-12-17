@@ -39,35 +39,7 @@ jobs:
           path: dist/*.exe
           retention-days: 7
 
-  build-macos-x64:
-    runs-on: macos-13
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build for macOS x64
-        run: npm run build && npx electron-builder --mac --x64
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CSC_IDENTITY_AUTO_DISCOVERY: false
-
-      - name: Upload macOS x64 artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: macos-x64-build
-          path: dist/*.dmg
-          retention-days: 7
-
-  build-macos-arm64:
+  build-macos:
     runs-on: macos-latest
     steps:
       - name: Checkout code
@@ -82,16 +54,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build for macOS arm64
-        run: npm run build && npx electron-builder --mac --arm64
+      - name: Build for macOS (Universal)
+        run: npm run build && npx electron-builder --mac --universal
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
-      - name: Upload macOS arm64 artifacts
+      - name: Upload macOS artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: macos-arm64-build
+          name: macos-build
           path: dist/*.dmg
           retention-days: 7
 
@@ -125,7 +97,7 @@ jobs:
           retention-days: 7
 
   release:
-    needs: [build-windows, build-macos-x64, build-macos-arm64, build-linux]
+    needs: [build-windows, build-macos, build-linux]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
 
@@ -147,8 +119,7 @@ jobs:
           prerelease: false
           files: |
             artifacts/windows-build/*
-            artifacts/macos-x64-build/*
-            artifacts/macos-arm64-build/*
+            artifacts/macos-build/*
             artifacts/linux-build/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

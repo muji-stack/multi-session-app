@@ -61,7 +61,8 @@
       "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" api repos/muji-stack/multi-session-web/pages -X POST -F source[branch]=main -F source[path]=\"/\")",
       "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" repo create muji-stack/multi-session-app --public --description \"MultiSession - X Multi-Account Manager\")",
       "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" workflow run build.yml --repo muji-stack/multi-session-app -f version=1.0.0)",
-      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" run list --repo muji-stack/multi-session-app --limit 5)"
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" run list --repo muji-stack/multi-session-app --limit 5)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" run list --repo muji-stack/multi-session-app --limit 3)"
     ]
   }
 }

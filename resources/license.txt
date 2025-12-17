@@ -1,0 +1,34 @@
+MultiSession License Agreement
+
+Copyright (c) 2025 MultiSession Team. All rights reserved.
+
+PLEASE READ THIS LICENSE AGREEMENT CAREFULLY BEFORE USING THIS SOFTWARE.
+
+By installing or using MultiSession ("Software"), you agree to be bound by the terms of this License Agreement.
+
+1. LICENSE GRANT
+   Subject to the terms of this Agreement, we grant you a limited, non-exclusive, non-transferable license to use the Software for personal or commercial purposes.
+
+2. RESTRICTIONS
+   You may not:
+   - Modify, reverse engineer, decompile, or disassemble the Software
+   - Rent, lease, or lend the Software to third parties
+   - Remove any proprietary notices or labels on the Software
+   - Use the Software for any unlawful purpose
+
+3. INTELLECTUAL PROPERTY
+   The Software and all copies thereof are proprietary to MultiSession Team and title thereto remains in MultiSession Team. All rights in the Software not specifically granted in this Agreement are reserved to MultiSession Team.
+
+4. DISCLAIMER OF WARRANTY
+   THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+5. LIMITATION OF LIABILITY
+   IN NO EVENT SHALL MULTISESSION TEAM BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT, OR CONSEQUENTIAL DAMAGES WHATSOEVER ARISING OUT OF OR IN ANY WAY RELATED TO YOUR USE OF OR INABILITY TO USE THE SOFTWARE.
+
+6. TERMINATION
+   This license is effective until terminated. It will terminate automatically without notice if you fail to comply with any provision of this Agreement.
+
+7. GOVERNING LAW
+   This Agreement shall be governed by and construed in accordance with the laws of Japan.
+
+By clicking "I Agree" or by installing, copying, or otherwise using the Software, you acknowledge that you have read this Agreement, understand it, and agree to be bound by its terms and conditions.

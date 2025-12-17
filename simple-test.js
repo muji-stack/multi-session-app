@@ -1,0 +1,1 @@
+const { app, BrowserWindow } = require("electron"); console.log("app type:", typeof app); console.log("app:", app); if(app) { app.on("ready", () => { console.log("App is ready\!"); const win = new BrowserWindow({width:800, height:600}); win.loadURL("https://google.com"); }); } else { console.log("app is undefined\!"); process.exit(1); }

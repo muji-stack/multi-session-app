@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can only read and update their own document
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && request.auth.uid == userId
+        // Don't allow users to modify subscription directly (only via Cloud Functions)
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['subscription', 'stripeCustomerId']);
+      allow delete: if false; // Users cannot delete their account data directly
+    }
+
+    // Allow Cloud Functions to read/write any user document
+    // This is handled by the admin SDK which bypasses rules
+  }
+}

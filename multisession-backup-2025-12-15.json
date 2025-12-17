@@ -1,0 +1,37 @@
+{
+  "version": "1.0",
+  "exportedAt": 1765810347159,
+  "accounts": [
+    {
+      "username": "aaa",
+      "displayName": null,
+      "profileImage": null,
+      "groupId": null,
+      "proxyId": null,
+      "memo": null,
+      "status": "unknown",
+      "searchBanStatus": "unknown",
+      "lastCheckedAt": null,
+      "sortOrder": 0
+    },
+    {
+      "username": "tests",
+      "displayName": null,
+      "profileImage": null,
+      "groupId": "f0b448da-11c5-43d4-9670-6f3b76a9b7bc",
+      "proxyId": null,
+      "memo": null,
+      "status": "normal",
+      "searchBanStatus": "search",
+      "lastCheckedAt": 1765806073260,
+      "sortOrder": 1
+    }
+  ],
+  "groups": [
+    {
+      "name": "test",
+      "color": "#8b5cf6",
+      "sortOrder": 0
+    }
+  ]
+}

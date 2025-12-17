@@ -1,0 +1,90 @@
+appId: com.multisession.app
+productName: MultiSession
+copyright: Copyright © 2025 MultiSession Team
+
+directories:
+  buildResources: resources
+  output: dist
+
+files:
+  - "out/**/*"
+  - "!**/*.map"
+  - "!**/.vscode/*"
+  - "!src/*"
+  - "!electron.vite.config.*"
+  - "!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc,.editorconfig}"
+  - "!{.env,.env.*}"
+  - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
+
+asarUnpack:
+  - resources/**
+  - "**/*.node"
+
+# Include native modules
+extraResources:
+  - from: "node_modules/better-sqlite3/build/Release"
+    to: "native_modules"
+    filter:
+      - "*.node"
+
+win:
+  executableName: MultiSession
+  # icon: resources/icon.ico  # Uncomment when icon.ico is available
+  signAndEditExecutable: false
+  target:
+    - target: nsis
+      arch:
+        - x64
+  artifactName: "${productName}-Setup-${version}.${ext}"
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  # installerIcon: resources/icon.ico  # Uncomment when icon.ico is available
+  # uninstallerIcon: resources/icon.ico
+  license: resources/license.txt
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  # installerHeaderIcon: resources/icon.ico
+
+mac:
+  # icon: resources/icon.icns  # Uncomment when icon.icns is available
+  category: public.app-category.productivity
+  entitlementsInherit: resources/entitlements.mac.plist
+  extendInfo:
+    - NSCameraUsageDescription: Application requests access to the device's camera.
+    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
+    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
+    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+
+dmg:
+  title: "${productName}"
+  # icon: resources/icon.icns  # Uncomment when icon.icns is available
+  artifactName: "${productName}-${version}-${arch}.${ext}"
+
+linux:
+  # icon: resources/icon.png  # Uncomment when icon.png is available
+  target:
+    - AppImage
+    - deb
+  maintainer: MultiSession Team
+  category: Utility
+
+appImage:
+  artifactName: "${productName}-${version}.${ext}"
+
+npmRebuild: true
+
+# Auto-update configuration
+publish:
+  provider: github
+  owner: muji-stack
+  repo: multi-session-releases
+  releaseType: release

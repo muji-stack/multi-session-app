@@ -32,6 +32,12 @@ interface AccountStats {
 }
 
 const api = {
+  // Platform info
+  platform: process.platform as 'win32' | 'darwin' | 'linux',
+  isMac: process.platform === 'darwin',
+  isWindows: process.platform === 'win32',
+  isLinux: process.platform === 'linux',
+
   // Window controls
   minimizeWindow: (): void => ipcRenderer.send('window:minimize'),
   maximizeWindow: (): void => ipcRenderer.send('window:maximize'),

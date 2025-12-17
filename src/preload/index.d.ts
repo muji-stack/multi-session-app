@@ -373,6 +373,13 @@ interface WorkflowApi {
 }
 
 interface Api {
+  // Platform info
+  platform: 'win32' | 'darwin' | 'linux'
+  isMac: boolean
+  isWindows: boolean
+  isLinux: boolean
+
+  // Window controls
   minimizeWindow: () => void
   maximizeWindow: () => void
   closeWindow: () => void

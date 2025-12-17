@@ -52,6 +52,7 @@ function Header(): JSX.Element {
   const location = useLocation()
   const navigate = useNavigate()
   const pageTitle = pageTitles[location.pathname] || 'MultiSession'
+  const isMac = window.api.isMac
 
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearchFocused, setIsSearchFocused] = useState(false)
@@ -153,8 +154,8 @@ function Header(): JSX.Element {
 
   return (
     <header className="h-12 bg-surface-dark/80 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-4 app-drag">
-      {/* Page Title with breadcrumb style */}
-      <div className="flex items-center gap-3 app-no-drag">
+      {/* Page Title with breadcrumb style - add left margin on macOS for traffic lights */}
+      <div className={`flex items-center gap-3 app-no-drag ${isMac ? 'ml-16' : ''}`}>
         <h1 className="text-lg font-semibold text-white">{pageTitle}</h1>
       </div>
 
@@ -235,33 +236,38 @@ function Header(): JSX.Element {
           <Settings size={18} />
         </button>
 
-        {/* Divider */}
-        <div className="w-px h-6 bg-white/10 mx-2" />
+        {/* Window Controls - Only show on Windows/Linux, macOS uses native traffic lights */}
+        {!isMac && (
+          <>
+            {/* Divider */}
+            <div className="w-px h-6 bg-white/10 mx-2" />
 
-        {/* Window Controls - macOS style */}
-        <div className="flex items-center gap-1.5">
-          <button
-            onClick={handleMinimize}
-            className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors group flex items-center justify-center"
-            title="最小化"
-          >
-            <Minus size={8} className="text-yellow-900 opacity-0 group-hover:opacity-100" />
-          </button>
-          <button
-            onClick={handleMaximize}
-            className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 transition-colors group flex items-center justify-center"
-            title="最大化"
-          >
-            <Square size={6} className="text-green-900 opacity-0 group-hover:opacity-100" />
-          </button>
-          <button
-            onClick={handleClose}
-            className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors group flex items-center justify-center"
-            title="閉じる"
-          >
-            <X size={8} className="text-red-900 opacity-0 group-hover:opacity-100" />
-          </button>
-        </div>
+            {/* Window Controls - Windows/Linux style */}
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={handleMinimize}
+                className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors group flex items-center justify-center"
+                title="最小化"
+              >
+                <Minus size={8} className="text-yellow-900 opacity-0 group-hover:opacity-100" />
+              </button>
+              <button
+                onClick={handleMaximize}
+                className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 transition-colors group flex items-center justify-center"
+                title="最大化"
+              >
+                <Square size={6} className="text-green-900 opacity-0 group-hover:opacity-100" />
+              </button>
+              <button
+                onClick={handleClose}
+                className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors group flex items-center justify-center"
+                title="閉じる"
+              >
+                <X size={8} className="text-red-900 opacity-0 group-hover:opacity-100" />
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </header>
   )

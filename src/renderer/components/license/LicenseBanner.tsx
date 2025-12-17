@@ -12,6 +12,7 @@ interface LicenseBannerProps {
 
 export function LicenseBanner({ license, onDismiss }: LicenseBannerProps) {
   const navigate = useNavigate()
+  const isMac = window.api.isMac
 
   if (!license) return null
 
@@ -28,13 +29,13 @@ export function LicenseBanner({ license, onDismiss }: LicenseBannerProps) {
 
     return (
       <div
-        className={`flex items-center justify-between px-4 py-2 ${
+        className={`flex items-center justify-between px-4 py-2 app-drag ${
           isUrgent
             ? 'bg-gradient-to-r from-red-500/20 to-orange-500/20 border-b border-red-500/30'
             : 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-b border-blue-500/30'
         }`}
       >
-        <div className="flex items-center gap-3">
+        <div className={`flex items-center gap-3 app-no-drag ${isMac ? 'ml-16' : ''}`}>
           <Clock className={`h-4 w-4 ${isUrgent ? 'text-red-400' : 'text-blue-400'}`} />
           <span className="text-sm text-gray-200">
             {license.daysRemaining !== null && license.daysRemaining > 0
@@ -44,7 +45,7 @@ export function LicenseBanner({ license, onDismiss }: LicenseBannerProps) {
         </div>
         <button
           onClick={handleUpgrade}
-          className="rounded-lg bg-blue-500 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-600"
+          className="rounded-lg bg-blue-500 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-600 app-no-drag"
         >
           プランをアップグレード
         </button>
@@ -55,8 +56,8 @@ export function LicenseBanner({ license, onDismiss }: LicenseBannerProps) {
   // Grace period banner
   if (license.status === 'grace_period') {
     return (
-      <div className="flex items-center justify-between bg-gradient-to-r from-yellow-500/20 to-orange-500/20 px-4 py-2 border-b border-yellow-500/30">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between bg-gradient-to-r from-yellow-500/20 to-orange-500/20 px-4 py-2 border-b border-yellow-500/30 app-drag">
+        <div className={`flex items-center gap-3 app-no-drag ${isMac ? 'ml-16' : ''}`}>
           <AlertTriangle className="h-4 w-4 text-yellow-400" />
           <span className="text-sm text-gray-200">
             お支払いに問題があります。{license.daysRemaining}日以内に更新してください。
@@ -64,7 +65,7 @@ export function LicenseBanner({ license, onDismiss }: LicenseBannerProps) {
         </div>
         <button
           onClick={handleUpgrade}
-          className="rounded-lg bg-yellow-500 px-4 py-1.5 text-sm font-medium text-black transition-colors hover:bg-yellow-400"
+          className="rounded-lg bg-yellow-500 px-4 py-1.5 text-sm font-medium text-black transition-colors hover:bg-yellow-400 app-no-drag"
         >
           支払い情報を更新
         </button>
@@ -75,8 +76,8 @@ export function LicenseBanner({ license, onDismiss }: LicenseBannerProps) {
   // Payment failed banner
   if (license.status === 'payment_failed') {
     return (
-      <div className="flex items-center justify-between bg-gradient-to-r from-red-500/20 to-pink-500/20 px-4 py-2 border-b border-red-500/30">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between bg-gradient-to-r from-red-500/20 to-pink-500/20 px-4 py-2 border-b border-red-500/30 app-drag">
+        <div className={`flex items-center gap-3 app-no-drag ${isMac ? 'ml-16' : ''}`}>
           <CreditCard className="h-4 w-4 text-red-400" />
           <span className="text-sm text-gray-200">
             お支払いに失敗しました。請求情報を更新してください。
@@ -84,7 +85,7 @@ export function LicenseBanner({ license, onDismiss }: LicenseBannerProps) {
         </div>
         <button
           onClick={handleUpgrade}
-          className="rounded-lg bg-red-500 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-red-600"
+          className="rounded-lg bg-red-500 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-red-600 app-no-drag"
         >
           支払い情報を更新
         </button>
@@ -95,8 +96,8 @@ export function LicenseBanner({ license, onDismiss }: LicenseBannerProps) {
   // Expired banner
   if (license.status === 'expired' || license.status === 'none') {
     return (
-      <div className="flex items-center justify-between bg-gradient-to-r from-gray-500/20 to-gray-600/20 px-4 py-2 border-b border-gray-500/30">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between bg-gradient-to-r from-gray-500/20 to-gray-600/20 px-4 py-2 border-b border-gray-500/30 app-drag">
+        <div className={`flex items-center gap-3 app-no-drag ${isMac ? 'ml-16' : ''}`}>
           <XCircle className="h-4 w-4 text-gray-400" />
           <span className="text-sm text-gray-200">
             サブスクリプションが終了しました。機能が制限されています。
@@ -104,7 +105,7 @@ export function LicenseBanner({ license, onDismiss }: LicenseBannerProps) {
         </div>
         <button
           onClick={handleUpgrade}
-          className="rounded-lg bg-blue-500 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-600"
+          className="rounded-lg bg-blue-500 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-600 app-no-drag"
         >
           プランを選択
         </button>

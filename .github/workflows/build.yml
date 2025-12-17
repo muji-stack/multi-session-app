@@ -54,16 +54,35 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build for macOS (Universal)
-        run: npm run build && npx electron-builder --mac --universal
+      - name: Build for macOS arm64
+        run: npm run build && npx electron-builder --mac --arm64
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
-      - name: Upload macOS artifacts
+      - name: Upload macOS arm64 artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: macos-build
+          name: macos-arm64-build
+          path: dist/*.dmg
+          retention-days: 7
+
+      - name: Clean dist for x64 build
+        run: rm -rf dist/mac* dist/*.dmg
+
+      - name: Rebuild native modules for x64
+        run: npm run rebuild
+
+      - name: Build for macOS x64
+        run: npm run build && npx electron-builder --mac --x64
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+
+      - name: Upload macOS x64 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-x64-build
           path: dist/*.dmg
           retention-days: 7
 
@@ -119,7 +138,8 @@ jobs:
           prerelease: false
           files: |
             artifacts/windows-build/*
-            artifacts/macos-build/*
+            artifacts/macos-arm64-build/*
+            artifacts/macos-x64-build/*
             artifacts/linux-build/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

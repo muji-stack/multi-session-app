@@ -53,7 +53,7 @@ jobs:
         run: npm ci
 
       - name: Build for macOS arm64
-        run: npm run build && npx electron-builder --mac --arm64 --publish never
+        run: npm run build && npx electron-builder --mac --arm64 --publish never -c.mac.target.0.arch=arm64
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
@@ -80,7 +80,7 @@ jobs:
         run: npm ci
 
       - name: Build for macOS x64
-        run: npm run build && npx electron-builder --mac --x64 --publish never
+        run: npm run build && npx electron-builder --mac --x64 --publish never -c.mac.target.0.arch=x64
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
 

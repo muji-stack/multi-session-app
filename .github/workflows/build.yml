@@ -65,7 +65,7 @@ jobs:
           retention-days: 7
 
   build-macos-x64:
-    runs-on: macos-15  # Intel runner for native x64 build
+    runs-on: macos-13  # Intel runner for native x64 build
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

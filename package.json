@@ -1,6 +1,6 @@
 {
   "name": "multi-session",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "X (Twitter) Multi-Account Manager Desktop App",
   "main": "./out/main/index.js",
   "author": "MultiSession Team",

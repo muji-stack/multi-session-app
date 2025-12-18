@@ -37,7 +37,7 @@ jobs:
           path: dist/*.exe
           retention-days: 7
 
-  build-macos:
+  build-macos-arm64:
     runs-on: macos-latest
     steps:
       - name: Checkout code
@@ -52,6 +52,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Rebuild native modules for arm64
+        run: npm run rebuild
+        env:
+          npm_config_arch: arm64
+
       - name: Build for macOS arm64
         run: npm run build && npx electron-builder --mac --arm64 --publish never
         env:
@@ -64,8 +69,25 @@ jobs:
           path: dist/*.zip
           retention-days: 7
 
-      - name: Clean dist for x64 build
-        run: rm -rf dist/mac* dist/*.zip dist/*.blockmap
+  build-macos-x64:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Rebuild native modules for x64
+        run: npm run rebuild
+        env:
+          npm_config_arch: x64
 
       - name: Build for macOS x64
         run: npm run build && npx electron-builder --mac --x64 --publish never
@@ -107,7 +129,7 @@ jobs:
           retention-days: 7
 
   release:
-    needs: [build-windows, build-macos, build-linux]
+    needs: [build-windows, build-macos-arm64, build-macos-x64, build-linux]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
     permissions:

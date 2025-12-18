@@ -1,6 +1,6 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
 import { join } from 'path'
-import { initializeDatabase, closeDatabase } from './database'
+import { initializeDatabase, closeDatabase, getInitializationError } from './database'
 import { registerAccountHandlers } from './ipc/accountHandlers'
 import { registerBrowserHandlers } from './ipc/browserHandlers'
 import { registerPostHandlers } from './ipc/postHandlers'
@@ -75,10 +75,40 @@ function createWindow(): void {
 app.whenReady().then(() => {
   app.setAppUserModelId('com.multisession')
 
-  // Initialize database
-  initializeDatabase()
+  // Window control IPC handlers (register before window creation)
+  ipcMain.on('window:minimize', () => {
+    mainWindow?.minimize()
+  })
 
-  // Register IPC handlers
+  ipcMain.on('window:maximize', () => {
+    if (mainWindow?.isMaximized()) {
+      mainWindow.unmaximize()
+    } else {
+      mainWindow?.maximize()
+    }
+  })
+
+  ipcMain.on('window:close', () => {
+    mainWindow?.close()
+  })
+
+  // Create window first so user sees something
+  createWindow()
+
+  // Initialize database with error handling
+  const dbInitialized = initializeDatabase()
+
+  if (!dbInitialized) {
+    const error = getInitializationError()
+    dialog.showErrorBox(
+      'Database Error / データベースエラー',
+      `Failed to initialize database. Please try reinstalling the application.\n\nデータベースの初期化に失敗しました。アプリを再インストールしてください。\n\nError: ${error?.message || 'Unknown error'}`
+    )
+    app.quit()
+    return
+  }
+
+  // Register IPC handlers after database is ready
   registerAccountHandlers()
   registerBrowserHandlers()
   registerPostHandlers()
@@ -102,25 +132,6 @@ app.whenReady().then(() => {
 
   // Setup auth state listener
   setupAuthStateListener()
-
-  // Window control IPC handlers
-  ipcMain.on('window:minimize', () => {
-    mainWindow?.minimize()
-  })
-
-  ipcMain.on('window:maximize', () => {
-    if (mainWindow?.isMaximized()) {
-      mainWindow.unmaximize()
-    } else {
-      mainWindow?.maximize()
-    }
-  })
-
-  ipcMain.on('window:close', () => {
-    mainWindow?.close()
-  })
-
-  createWindow()
 
   // Setup security monitor for main window
   if (mainWindow) {

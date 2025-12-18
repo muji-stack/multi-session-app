@@ -19,13 +19,8 @@ files:
 asarUnpack:
   - resources/**
   - "**/*.node"
-
-# Include native modules
-extraResources:
-  - from: "node_modules/better-sqlite3/build/Release"
-    to: "native_modules"
-    filter:
-      - "*.node"
+  - "**/better-sqlite3/**"
+  - "**/node_modules/better-sqlite3/**"
 
 win:
   executableName: MultiSession

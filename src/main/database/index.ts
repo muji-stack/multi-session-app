@@ -1,9 +1,10 @@
 import Database from 'better-sqlite3'
 import { app } from 'electron'
 import { join } from 'path'
-import { existsSync, mkdirSync } from 'fs'
+import { existsSync, mkdirSync, writeFileSync } from 'fs'
 
 let db: Database.Database | null = null
+let initializationError: Error | null = null
 
 export function getDatabase(): Database.Database {
   if (!db) {
@@ -12,21 +13,52 @@ export function getDatabase(): Database.Database {
   return db
 }
 
-export function initializeDatabase(): void {
-  const userDataPath = app.getPath('userData')
-  const dbDir = join(userDataPath, 'data')
+export function getInitializationError(): Error | null {
+  return initializationError
+}
 
-  if (!existsSync(dbDir)) {
-    mkdirSync(dbDir, { recursive: true })
+export function initializeDatabase(): boolean {
+  try {
+    const userDataPath = app.getPath('userData')
+    const dbDir = join(userDataPath, 'data')
+
+    if (!existsSync(dbDir)) {
+      mkdirSync(dbDir, { recursive: true })
+    }
+
+    const dbPath = join(dbDir, 'multisession.db')
+
+    // Log for debugging
+    console.log('Database path:', dbPath)
+    console.log('Platform:', process.platform)
+    console.log('Architecture:', process.arch)
+
+    db = new Database(dbPath)
+
+    db.pragma('journal_mode = WAL')
+    db.pragma('foreign_keys = ON')
+
+    createTables()
+
+    console.log('Database initialized successfully')
+    return true
+  } catch (error) {
+    initializationError = error as Error
+    console.error('Database initialization failed:', error)
+
+    // Write error to log file for debugging
+    try {
+      const userDataPath = app.getPath('userData')
+      const errorLogPath = join(userDataPath, 'db-error.log')
+      const errorLog = `[${new Date().toISOString()}] Database initialization failed:\n${(error as Error).stack || (error as Error).message}\n\nPlatform: ${process.platform}\nArch: ${process.arch}\n`
+      writeFileSync(errorLogPath, errorLog)
+      console.error('Error log written to:', errorLogPath)
+    } catch {
+      // Ignore log write errors
+    }
+
+    return false
   }
-
-  const dbPath = join(dbDir, 'multisession.db')
-  db = new Database(dbPath)
-
-  db.pragma('journal_mode = WAL')
-  db.pragma('foreign_keys = ON')
-
-  createTables()
 }
 
 function createTables(): void {

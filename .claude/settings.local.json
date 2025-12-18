@@ -72,7 +72,15 @@
       "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" run list --repo muji-stack/multi-session-app --limit 1)",
       "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" run view 20297537932 --repo muji-stack/multi-session-app --log-failed)",
       "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" release view v1.0.2 --repo muji-stack/multi-session-app)",
-      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" workflow run build.yml --repo muji-stack/multi-session-app -f version=1.0.3)"
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" workflow run build.yml --repo muji-stack/multi-session-app -f version=1.0.3)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" repo list muji-stack --limit 10)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" run view 20331486491 --repo muji-stack/multi-session-app --log-failed)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" release view v1.0.3 --repo muji-stack/multi-session-app)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" api repos/muji-stack/multi-session-web/pages)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" workflow run build.yml --repo muji-stack/multi-session-app -f version=1.0.4)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" run view 20332378373 --repo muji-stack/multi-session-app)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" run view 20332543074 --repo muji-stack/multi-session-app --log-failed)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" run view 20332759010 --repo muji-stack/multi-session-app --log-failed)"
     ]
   }
 }

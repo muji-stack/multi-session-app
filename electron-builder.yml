@@ -55,10 +55,7 @@ mac:
     - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
     - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
   target:
-    - target: zip
-      arch:
-        - x64
-        - arm64
+    - zip
 
 linux:
   # icon: resources/icon.png  # Uncomment when icon.png is available
